@@ -140,6 +140,16 @@ public class InventarioService {
         return repositorio.listarTodos();
     }
 
+    public List<Libro> buscarPorTitulo(String textoBusqueda) {
+        if (textoBusqueda == null || textoBusqueda.trim().isEmpty()) {
+            throw new IllegalArgumentException("El criterio de búsqueda por título no puede estar vacío.");
+        }
+        String criterio = textoBusqueda.trim().toLowerCase();
+        return repositorio.listarTodos().stream()
+                .filter(libro -> libro.getTitulo() != null && libro.getTitulo().toLowerCase().contains(criterio))
+                .toList();
+    }
+    
     // Subtema 4: Descomposición funcional en métodos auxiliares privados cohesivos
     private void validarDatosObligatoriosLibro(Libro libro) {
         if (libro == null) {
